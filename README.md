@@ -102,7 +102,7 @@ func TestGetName(t *testing.T) {
 	}
 
 	//lets start dynamock in action
-	mock.ExpectGetItem().ToTable("employee").WithKeys(expectKey).WillReturns(result)
+	mock.ExpectGetItem().ToTable("employee").WithKeys(expectKey).WillReturns(result, nil)
 
 	actualResult, _ := GetName("1")
 	if actualResult != expectedResult {
@@ -112,17 +112,17 @@ func TestGetName(t *testing.T) {
 ```
 if you just wanna expect the table
 ``` go
-mock.ExpectGetItem().ToTable("employee").WillReturns(result)
+mock.ExpectGetItem().ToTable("employee").WillReturns(result, nil)
 ```
 or maybe you didn't care with any arguments, you just need to determine the result
 ``` go
-mock.ExpectGetItem().WillReturns(result)
+mock.ExpectGetItem().WillReturns(result, nil)
 ```
 and you can do multiple expectations at once, then the expectation will be executed sequentially.
 ``` go
-mock.ExpectGetItem().WillReturns(resultOne)
-mock.ExpectUpdateItem().WillReturns(resultTwo)
-mock.ExpectGetItem().WillReturns(resultThree)
+mock.ExpectGetItem().WillReturns(resultOne, nil)
+mock.ExpectUpdateItem().WillReturns(resultTwo, nil)
+mock.ExpectGetItem().WillReturns(resultThree, nil)
 
 /* Result
 the first call of GetItem will return resultOne
