@@ -2,7 +2,7 @@ package examples
 
 import (
 	"errors"
-	dynamock "github.com/gusaul/go-dynamock"
+	dynamock "github.com/martinhej/go-dynamock"
 	"testing"
 
 	"github.com/aws/aws-sdk-go/aws"

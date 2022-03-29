@@ -1,14 +1,14 @@
-[![GoDoc](https://godoc.org/github.com/gusaul/go-dynamock?status.png)](https://godoc.org/github.com/gusaul/go-dynamock) [![Go Report Card](https://goreportcard.com/badge/github.com/gusaul/go-dynamock)](https://goreportcard.com/report/github.com/gusaul/go-dynamock) [![Build Status](https://travis-ci.com/gusaul/go-dynamock.svg?branch=master)](https://travis-ci.com/gusaul/go-dynamock)
+[![GoDoc](https://godoc.org/github.com/martinhej/go-dynamock?status.png)](https://godoc.org/github.com/martinhej/go-dynamock) [![Go Report Card](https://goreportcard.com/badge/github.com/martinhej/go-dynamock)](https://goreportcard.com/report/github.com/martinhej/go-dynamock) [![Build Status](https://travis-ci.com/martinhej/go-dynamock.svg?branch=master)](https://travis-ci.com/martinhej/go-dynamock)
 # go-dynamock
 Amazon Dynamo DB Mock Driver for Golang to Test Database Interactions
 
 ## Install
 ```
-go get github.com/gusaul/go-dynamock
+go get github.com/martinhej/go-dynamock
 ```
 
 ## Examples Usage
-Visit [godoc](https://godoc.org/github.com/gusaul/go-dynamock) for general examples and public api reference.
+Visit [godoc](https://godoc.org/github.com/martinhej/go-dynamock) for general examples and public api reference.
 
 ### DynamoDB configuration
 First of all, change the dynamodb configuration to use the ***dynamodb interface***. see code below:
@@ -75,7 +75,7 @@ import (
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
-	dynamock "github.com/gusaul/go-dynamock"
+	dynamock "github.com/martinhej/go-dynamock"
 )
 
 var mock *dynamock.DynaMock
@@ -163,4 +163,4 @@ and will be treated cautiously
 
 ## License
 
-The [MIT License](https://github.com/gusaul/go-dynamock/blob/master/LICENSE)
+The [MIT License](https://github.com/martinhej/go-dynamock/blob/master/LICENSE)
