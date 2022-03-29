@@ -1,6 +1,7 @@
 package examples
 
 import (
+	"errors"
 	dynamock "github.com/gusaul/go-dynamock"
 	"testing"
 
@@ -32,18 +33,25 @@ func TestGetName(t *testing.T) {
 	}
 
 	//lets start dynamock in action
-	mock.ExpectGetItem().ToTable("employee").WithKeys(expectKey).WillReturns(result)
+	mock.ExpectGetItem().ToTable("employee").WithKeys(expectKey).WillReturns(result, nil)
 
 	actualResult, _ := GetName("1")
 	if actualResult != expectedResult {
 		t.Errorf("Test Fail")
+	}
+
+	mock.ExpectGetItem().ToTable("employee").WithKeys(expectKey).WillReturns(dynamodb.GetItemOutput{}, errors.New("error"))
+
+	_, err := GetName("1")
+	if err.Error() != "error" {
+		t.Error("Error was expected")
 	}
 }
 
 func TestGetTransactGetItems(t *testing.T) {
 	databaseOutput := dynamodb.TransactWriteItemsOutput{}
 
-	mock.ExpectTransactWriteItems().Table("wrongTable").WillReturns(databaseOutput)
+	mock.ExpectTransactWriteItems().Table("wrongTable").WillReturns(databaseOutput, nil)
 
 	err := GetTransactGetItems("")
 

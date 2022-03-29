@@ -22,8 +22,9 @@ func (e *DeleteItemExpectation) WithKeys(keys map[string]*dynamodb.AttributeValu
 }
 
 // WillReturns - method for set desired result
-func (e *DeleteItemExpectation) WillReturns(res dynamodb.DeleteItemOutput) *DeleteItemExpectation {
+func (e *DeleteItemExpectation) WillReturns(res dynamodb.DeleteItemOutput, err error) *DeleteItemExpectation {
 	e.output = &res
+	e.err = err
 	return e
 }
 
@@ -47,7 +48,7 @@ func (e *MockDynamoDB) DeleteItem(input *dynamodb.DeleteItemInput) (*dynamodb.De
 		// delete first element of expectation
 		e.dynaMock.DeleteItemExpect = append(e.dynaMock.DeleteItemExpect[:0], e.dynaMock.DeleteItemExpect[1:]...)
 
-		return x.output, nil
+		return x.output, x.err
 	}
 
 	return &dynamodb.DeleteItemOutput{}, fmt.Errorf("Delete Item Expectation Not Found")

@@ -33,12 +33,14 @@ type (
 		table  *string
 		key    map[string]*dynamodb.AttributeValue
 		output *dynamodb.GetItemOutput
+		err    error
 	}
 
 	// BatchGetItemExpectation struct hold expectation field, err, and result
 	BatchGetItemExpectation struct {
 		input  map[string]*dynamodb.KeysAndAttributes
 		output *dynamodb.BatchGetItemOutput
+		err    error
 	}
 
 	// UpdateItemExpectation struct hold expectation field, err, and result
@@ -47,6 +49,7 @@ type (
 		key              map[string]*dynamodb.AttributeValue
 		table            *string
 		output           *dynamodb.UpdateItemOutput
+		err              error
 	}
 
 	// PutItemExpectation struct hold expectation field, err, and result
@@ -54,6 +57,7 @@ type (
 		item   map[string]*dynamodb.AttributeValue
 		table  *string
 		output *dynamodb.PutItemOutput
+		err    error
 	}
 
 	// DeleteItemExpectation struct hold expectation field, err, and result
@@ -61,12 +65,14 @@ type (
 		key    map[string]*dynamodb.AttributeValue
 		table  *string
 		output *dynamodb.DeleteItemOutput
+		err    error
 	}
 
 	// BatchWriteItemExpectation struct hold expectation field, err, and result
 	BatchWriteItemExpectation struct {
 		input  map[string][]*dynamodb.WriteRequest
 		output *dynamodb.BatchWriteItemOutput
+		err    error
 	}
 
 	// CreateTableExpectation struct hold expectation field, err, and result
@@ -74,12 +80,14 @@ type (
 		keySchema []*dynamodb.KeySchemaElement
 		table     *string
 		output    *dynamodb.CreateTableOutput
+		err       error
 	}
 
 	// DescribeTableExpectation struct hold expectation field, err, and result
 	DescribeTableExpectation struct {
 		table  *string
 		output *dynamodb.DescribeTableOutput
+		err    error
 	}
 
 	// WaitTableExistExpectation struct hold expectation field, err, and result
@@ -92,12 +100,14 @@ type (
 	ScanExpectation struct {
 		table  *string
 		output *dynamodb.ScanOutput
+		err    error
 	}
 
 	// QueryExpectation struct hold expectation field, err, and result
 	QueryExpectation struct {
 		table  *string
 		output *dynamodb.QueryOutput
+		err    error
 	}
 
 	// TransactWriteItemsExpectation struct holds field, err, and result
@@ -105,5 +115,6 @@ type (
 		table  *string
 		items  []*dynamodb.TransactWriteItem
 		output *dynamodb.TransactWriteItemsOutput
+		err    error
 	}
 )

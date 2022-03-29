@@ -22,8 +22,9 @@ func (e *GetItemExpectation) WithKeys(keys map[string]*dynamodb.AttributeValue) 
 }
 
 // WillReturns - method for set desired result
-func (e *GetItemExpectation) WillReturns(res dynamodb.GetItemOutput) *GetItemExpectation {
+func (e *GetItemExpectation) WillReturns(res dynamodb.GetItemOutput, err error) *GetItemExpectation {
 	e.output = &res
+	e.err = err
 	return e
 }
 
@@ -47,7 +48,7 @@ func (e *MockDynamoDB) GetItem(input *dynamodb.GetItemInput) (*dynamodb.GetItemO
 		// delete first element of expectation
 		e.dynaMock.GetItemExpect = append(e.dynaMock.GetItemExpect[:0], e.dynaMock.GetItemExpect[1:]...)
 
-		return x.output, nil
+		return x.output, x.err
 	}
 
 	return &dynamodb.GetItemOutput{}, fmt.Errorf("Get Item Expectation Not Found")

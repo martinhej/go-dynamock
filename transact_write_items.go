@@ -22,8 +22,9 @@ func (e *TransactWriteItemsExpectation) WithItems(items []*dynamodb.TransactWrit
 }
 
 // WillReturns - method for set desired result
-func (e *TransactWriteItemsExpectation) WillReturns(res dynamodb.TransactWriteItemsOutput) *TransactWriteItemsExpectation {
+func (e *TransactWriteItemsExpectation) WillReturns(res dynamodb.TransactWriteItemsOutput, err error) *TransactWriteItemsExpectation {
 	e.output = &res
+	e.err = err
 	return e
 }
 
@@ -57,12 +58,12 @@ func (e *MockDynamoDB) TransactWriteItems(input *dynamodb.TransactWriteItemsInpu
 		e.dynaMock.TransactWriteItemsExpect = append(e.dynaMock.TransactWriteItemsExpect[:0],
 			e.dynaMock.TransactWriteItemsExpect[1:]...)
 
-		return x.output, nil
+		return x.output, x.err
 	}
 
 	return &dynamodb.TransactWriteItemsOutput{}, fmt.Errorf("Transact Write Items Table Expectation Not Found")
 }
 
 func (e *MockDynamoDB) TransactWriteItemsWithContext(ctx aws.Context, input *dynamodb.TransactWriteItemsInput, opts ...request.Option) (*dynamodb.TransactWriteItemsOutput, error) {
-  return e.TransactWriteItems(input)
+	return e.TransactWriteItems(input)
 }

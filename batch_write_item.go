@@ -16,8 +16,9 @@ func (e *BatchWriteItemExpectation) WithRequest(input map[string][]*dynamodb.Wri
 }
 
 // WillReturns - method for set desired result
-func (e *BatchWriteItemExpectation) WillReturns(res dynamodb.BatchWriteItemOutput) *BatchWriteItemExpectation {
+func (e *BatchWriteItemExpectation) WillReturns(res dynamodb.BatchWriteItemOutput, err error) *BatchWriteItemExpectation {
 	e.output = &res
+	e.err = err
 	return e
 }
 
@@ -28,7 +29,7 @@ func (e *MockDynamoDB) BatchWriteItem(input *dynamodb.BatchWriteItemInput) (*dyn
 			if x.input != nil {
 				if reflect.DeepEqual(x.input, input.RequestItems) {
 					e.dynaMock.BatchWriteItemExpect = append(e.dynaMock.BatchWriteItemExpect[:i], e.dynaMock.BatchWriteItemExpect[i:]...)
-					return x.output, nil
+					return x.output, x.err
 				}
 			}
 		}
@@ -51,7 +52,7 @@ func (e *MockDynamoDB) BatchWriteItemWithContext(ctx aws.Context, input *dynamod
 		// delete first element of expectation
 		e.dynaMock.BatchWriteItemExpect = append(e.dynaMock.BatchWriteItemExpect[:0], e.dynaMock.BatchWriteItemExpect[1:]...)
 
-		return x.output, nil
+		return x.output, x.err
 	}
 
 	return &dynamodb.BatchWriteItemOutput{}, fmt.Errorf("Batch Write Item Expectation Not Found")

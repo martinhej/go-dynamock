@@ -20,8 +20,9 @@ func (e *CreateTableExpectation) KeySchema(keySchema []*dynamodb.KeySchemaElemen
 }
 
 // WillReturns - method for set desired result
-func (e *CreateTableExpectation) WillReturns(res dynamodb.CreateTableOutput) *CreateTableExpectation {
+func (e *CreateTableExpectation) WillReturns(res dynamodb.CreateTableOutput, err error) *CreateTableExpectation {
 	e.output = &res
+	e.err = err
 	return e
 }
 
@@ -45,7 +46,7 @@ func (e *MockDynamoDB) CreateTable(input *dynamodb.CreateTableInput) (*dynamodb.
 		// delete first element of expectation
 		e.dynaMock.CreateTableExpect = append(e.dynaMock.CreateTableExpect[:0], e.dynaMock.CreateTableExpect[1:]...)
 
-		return x.output, nil
+		return x.output, x.err
 	}
 
 	return &dynamodb.CreateTableOutput{}, fmt.Errorf("Create Table Expectation Not Found")

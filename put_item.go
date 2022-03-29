@@ -22,8 +22,9 @@ func (e *PutItemExpectation) WithItems(item map[string]*dynamodb.AttributeValue)
 }
 
 // WillReturns - method for set desired result
-func (e *PutItemExpectation) WillReturns(res dynamodb.PutItemOutput) *PutItemExpectation {
+func (e *PutItemExpectation) WillReturns(res dynamodb.PutItemOutput, err error) *PutItemExpectation {
 	e.output = &res
+	e.err = err
 	return e
 }
 
@@ -47,7 +48,7 @@ func (e *MockDynamoDB) PutItem(input *dynamodb.PutItemInput) (*dynamodb.PutItemO
 		// delete first element of expectation
 		e.dynaMock.PutItemExpect = append(e.dynaMock.PutItemExpect[:0], e.dynaMock.PutItemExpect[1:]...)
 
-		return x.output, nil
+		return x.output, x.err
 	}
 
 	return &dynamodb.PutItemOutput{}, fmt.Errorf("Put Item Expectation Not Found")

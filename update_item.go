@@ -28,8 +28,9 @@ func (e *UpdateItemExpectation) Updates(attrs map[string]*dynamodb.AttributeValu
 }
 
 // WillReturns - method for set desired result
-func (e *UpdateItemExpectation) WillReturns(res dynamodb.UpdateItemOutput) *UpdateItemExpectation {
+func (e *UpdateItemExpectation) WillReturns(res dynamodb.UpdateItemOutput, err error) *UpdateItemExpectation {
 	e.output = &res
+	e.err = err
 	return e
 }
 
@@ -59,7 +60,7 @@ func (e *MockDynamoDB) UpdateItem(input *dynamodb.UpdateItemInput) (*dynamodb.Up
 		// delete first element of expectation
 		e.dynaMock.UpdateItemExpect = append(e.dynaMock.UpdateItemExpect[:0], e.dynaMock.UpdateItemExpect[1:]...)
 
-		return x.output, nil
+		return x.output, x.err
 	}
 
 	return &dynamodb.UpdateItemOutput{}, fmt.Errorf("Update Item Expectation Not Found")

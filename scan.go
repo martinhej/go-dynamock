@@ -16,8 +16,9 @@ func (e *ScanExpectation) Table(table string) *ScanExpectation {
 }
 
 // WillReturns - method for set desired result
-func (e *ScanExpectation) WillReturns(res dynamodb.ScanOutput) *ScanExpectation {
+func (e *ScanExpectation) WillReturns(res dynamodb.ScanOutput, err error) *ScanExpectation {
 	e.output = &res
+	e.err = err
 	return e
 }
 
@@ -35,7 +36,7 @@ func (e *MockDynamoDB) Scan(input *dynamodb.ScanInput) (*dynamodb.ScanOutput, er
 		// delete first element of expectation
 		e.dynaMock.ScanExpect = append(e.dynaMock.ScanExpect[:0], e.dynaMock.ScanExpect[1:]...)
 
-		return x.output, nil
+		return x.output, x.err
 	}
 
 	return &dynamodb.ScanOutput{}, fmt.Errorf("Scan Table Expectation Not Found")

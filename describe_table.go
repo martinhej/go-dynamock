@@ -13,8 +13,9 @@ func (e *DescribeTableExpectation) Table(table string) *DescribeTableExpectation
 }
 
 // WillReturns - method for set desired result
-func (e *DescribeTableExpectation) WillReturns(res dynamodb.DescribeTableOutput) *DescribeTableExpectation {
+func (e *DescribeTableExpectation) WillReturns(res dynamodb.DescribeTableOutput, err error) *DescribeTableExpectation {
 	e.output = &res
+	e.err = err
 	return e
 }
 
@@ -32,7 +33,7 @@ func (e *MockDynamoDB) DescribeTable(input *dynamodb.DescribeTableInput) (*dynam
 		// delete first element of expectation
 		e.dynaMock.DescribeTableExpect = append(e.dynaMock.DescribeTableExpect[:0], e.dynaMock.DescribeTableExpect[1:]...)
 
-		return x.output, nil
+		return x.output, x.err
 	}
 
 	return &dynamodb.DescribeTableOutput{}, fmt.Errorf("Describe Table Expectation Not Found")

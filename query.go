@@ -15,8 +15,9 @@ func (e *QueryExpectation) Table(table string) *QueryExpectation {
 }
 
 // WillReturns - method for set desired result
-func (e *QueryExpectation) WillReturns(res dynamodb.QueryOutput) *QueryExpectation {
+func (e *QueryExpectation) WillReturns(res dynamodb.QueryOutput, err error) *QueryExpectation {
 	e.output = &res
+	e.err = err
 	return e
 }
 
@@ -34,7 +35,7 @@ func (e *MockDynamoDB) Query(input *dynamodb.QueryInput) (*dynamodb.QueryOutput,
 		// delete first element of expectation
 		e.dynaMock.QueryExpect = append(e.dynaMock.QueryExpect[:0], e.dynaMock.QueryExpect[1:]...)
 
-		return x.output, nil
+		return x.output, x.err
 	}
 
 	return &dynamodb.QueryOutput{}, fmt.Errorf("Query Table Expectation Not Found")

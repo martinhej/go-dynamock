@@ -16,8 +16,9 @@ func (e *BatchGetItemExpectation) WithRequest(input map[string]*dynamodb.KeysAnd
 }
 
 // WillReturns - method for set desired result
-func (e *BatchGetItemExpectation) WillReturns(res dynamodb.BatchGetItemOutput) *BatchGetItemExpectation {
+func (e *BatchGetItemExpectation) WillReturns(res dynamodb.BatchGetItemOutput, err error) *BatchGetItemExpectation {
 	e.output = &res
+	e.err = err
 	return e
 }
 
