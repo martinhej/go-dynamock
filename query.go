@@ -15,8 +15,13 @@ func (e *QueryExpectation) Table(table string) *QueryExpectation {
 }
 
 // WillReturns - method for set desired result
-func (e *QueryExpectation) WillReturns(res dynamodb.QueryOutput, err error) *QueryExpectation {
+func (e *QueryExpectation) WillReturns(res dynamodb.QueryOutput) *QueryExpectation {
 	e.output = &res
+	return e
+}
+
+// WillError - mocks the call to return the provided error.
+func (e *QueryExpectation) WillError(err error) *QueryExpectation {
 	e.err = err
 	return e
 }

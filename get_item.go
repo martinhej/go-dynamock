@@ -22,8 +22,13 @@ func (e *GetItemExpectation) WithKeys(keys map[string]*dynamodb.AttributeValue) 
 }
 
 // WillReturns - method for set desired result
-func (e *GetItemExpectation) WillReturns(res dynamodb.GetItemOutput, err error) *GetItemExpectation {
+func (e *GetItemExpectation) WillReturns(res dynamodb.GetItemOutput) *GetItemExpectation {
 	e.output = &res
+	return e
+}
+
+// WillError - mocks the call to return the provided error.
+func (e *GetItemExpectation) WillError(err error) *GetItemExpectation {
 	e.err = err
 	return e
 }

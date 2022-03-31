@@ -20,8 +20,13 @@ func (e *CreateTableExpectation) KeySchema(keySchema []*dynamodb.KeySchemaElemen
 }
 
 // WillReturns - method for set desired result
-func (e *CreateTableExpectation) WillReturns(res dynamodb.CreateTableOutput, err error) *CreateTableExpectation {
+func (e *CreateTableExpectation) WillReturns(res dynamodb.CreateTableOutput) *CreateTableExpectation {
 	e.output = &res
+	return e
+}
+
+// WillError - mocks the call to return the provided error.
+func (e *CreateTableExpectation) WillError(err error) *CreateTableExpectation {
 	e.err = err
 	return e
 }

@@ -18,6 +18,11 @@ func (e *BatchGetItemExpectation) WithRequest(input map[string]*dynamodb.KeysAnd
 // WillReturns - method for set desired result
 func (e *BatchGetItemExpectation) WillReturns(res dynamodb.BatchGetItemOutput, err error) *BatchGetItemExpectation {
 	e.output = &res
+	return e
+}
+
+// WillError - mocks the call to return the provided error.
+func (e *BatchGetItemExpectation) WillError(err error) *BatchGetItemExpectation {
 	e.err = err
 	return e
 }

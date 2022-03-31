@@ -22,8 +22,13 @@ func (e *TransactWriteItemsExpectation) WithItems(items []*dynamodb.TransactWrit
 }
 
 // WillReturns - method for set desired result
-func (e *TransactWriteItemsExpectation) WillReturns(res dynamodb.TransactWriteItemsOutput, err error) *TransactWriteItemsExpectation {
+func (e *TransactWriteItemsExpectation) WillReturns(res dynamodb.TransactWriteItemsOutput) *TransactWriteItemsExpectation {
 	e.output = &res
+	return e
+}
+
+// WillError - mocks the call to return the provided error.
+func (e *TransactWriteItemsExpectation) WillError(err error) *TransactWriteItemsExpectation {
 	e.err = err
 	return e
 }

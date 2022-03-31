@@ -22,8 +22,13 @@ func (e *DeleteItemExpectation) WithKeys(keys map[string]*dynamodb.AttributeValu
 }
 
 // WillReturns - method for set desired result
-func (e *DeleteItemExpectation) WillReturns(res dynamodb.DeleteItemOutput, err error) *DeleteItemExpectation {
+func (e *DeleteItemExpectation) WillReturns(res dynamodb.DeleteItemOutput) *DeleteItemExpectation {
 	e.output = &res
+	return e
+}
+
+// WillError - mocks the call to return the provided error.
+func (e *DeleteItemExpectation) WillError(err error) *DeleteItemExpectation {
 	e.err = err
 	return e
 }

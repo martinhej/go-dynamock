@@ -13,8 +13,13 @@ func (e *DescribeTableExpectation) Table(table string) *DescribeTableExpectation
 }
 
 // WillReturns - method for set desired result
-func (e *DescribeTableExpectation) WillReturns(res dynamodb.DescribeTableOutput, err error) *DescribeTableExpectation {
+func (e *DescribeTableExpectation) WillReturns(res dynamodb.DescribeTableOutput) *DescribeTableExpectation {
 	e.output = &res
+	return e
+}
+
+// WillError - mocks the call to return the provided error.
+func (e *DescribeTableExpectation) WillError(err error) *DescribeTableExpectation {
 	e.err = err
 	return e
 }

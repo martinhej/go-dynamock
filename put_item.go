@@ -24,6 +24,11 @@ func (e *PutItemExpectation) WithItems(item map[string]*dynamodb.AttributeValue)
 // WillReturns - method for set desired result
 func (e *PutItemExpectation) WillReturns(res dynamodb.PutItemOutput, err error) *PutItemExpectation {
 	e.output = &res
+	return e
+}
+
+// WillError - mocks the call to return the provided error.
+func (e *PutItemExpectation) WillError(err error) *PutItemExpectation {
 	e.err = err
 	return e
 }

@@ -28,8 +28,13 @@ func (e *UpdateItemExpectation) Updates(attrs map[string]*dynamodb.AttributeValu
 }
 
 // WillReturns - method for set desired result
-func (e *UpdateItemExpectation) WillReturns(res dynamodb.UpdateItemOutput, err error) *UpdateItemExpectation {
+func (e *UpdateItemExpectation) WillReturns(res dynamodb.UpdateItemOutput) *UpdateItemExpectation {
 	e.output = &res
+	return e
+}
+
+// WillError - mocks the call to return the provided error.
+func (e *UpdateItemExpectation) WillError(err error) *UpdateItemExpectation {
 	e.err = err
 	return e
 }

@@ -33,14 +33,14 @@ func TestGetName(t *testing.T) {
 	}
 
 	//lets start dynamock in action
-	mock.ExpectGetItem().ToTable("employee").WithKeys(expectKey).WillReturns(result, nil)
+	mock.ExpectGetItem().ToTable("employee").WithKeys(expectKey).WillReturns(result)
 
 	actualResult, _ := GetName("1")
 	if actualResult != expectedResult {
 		t.Errorf("Test Fail")
 	}
 
-	mock.ExpectGetItem().ToTable("employee").WithKeys(expectKey).WillReturns(dynamodb.GetItemOutput{}, errors.New("error"))
+	mock.ExpectGetItem().ToTable("employee").WithKeys(expectKey).WillError(errors.New("error"))
 
 	_, err := GetName("1")
 	if err.Error() != "error" {
@@ -51,7 +51,7 @@ func TestGetName(t *testing.T) {
 func TestGetTransactGetItems(t *testing.T) {
 	databaseOutput := dynamodb.TransactWriteItemsOutput{}
 
-	mock.ExpectTransactWriteItems().Table("wrongTable").WillReturns(databaseOutput, nil)
+	mock.ExpectTransactWriteItems().Table("wrongTable").WillReturns(databaseOutput)
 
 	err := GetTransactGetItems("")
 

@@ -16,8 +16,13 @@ func (e *BatchWriteItemExpectation) WithRequest(input map[string][]*dynamodb.Wri
 }
 
 // WillReturns - method for set desired result
-func (e *BatchWriteItemExpectation) WillReturns(res dynamodb.BatchWriteItemOutput, err error) *BatchWriteItemExpectation {
+func (e *BatchWriteItemExpectation) WillReturns(res dynamodb.BatchWriteItemOutput) *BatchWriteItemExpectation {
 	e.output = &res
+	return e
+}
+
+// WillError - mocks the call to return the provided error.
+func (e *BatchWriteItemExpectation) WillError(err error) *BatchWriteItemExpectation {
 	e.err = err
 	return e
 }

@@ -22,6 +22,12 @@ func (e *ScanExpectation) WillReturns(res dynamodb.ScanOutput, err error) *ScanE
 	return e
 }
 
+// WillError - mocks the call to return the provided error.
+func (e *ScanExpectation) WillError(err error) *ScanExpectation {
+	e.err = err
+	return e
+}
+
 // Scan - this func will be invoked when test running matching expectation with actual input
 func (e *MockDynamoDB) Scan(input *dynamodb.ScanInput) (*dynamodb.ScanOutput, error) {
 	if len(e.dynaMock.ScanExpect) > 0 {
